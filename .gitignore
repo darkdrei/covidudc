@@ -9,6 +9,7 @@ __pycache__/
 #personal
 .vscode
 settings_local
+local_settings
 
 # Distribution / packaging
 .Python
