@@ -25,6 +25,9 @@ class Recomendacion(models.Model):
     nombre = models.CharField(max_length=500)
     descripcion = models.TextField(max_length=2000, verbose_name='Descripción', blank=True, null=True)
 
+    def __str__(self):
+        return '{nombre}'.format(nombre=self.nombre)
+    
     class Meta:
         verbose_name = 'Recomendación'
         verbose_name_plural = 'Recomendaciones'
@@ -46,7 +49,7 @@ class Observacion(models.Model):
 class Clasificador(models.Model):
     nombre = models.CharField(max_length=500)
     descripcion = models.TextField(max_length=2000, verbose_name='Descripción', blank=True, null=True)
-    recomendaciones = models.ManyToManyField(Recomendacion)
+    recomendaciones = models.ManyToManyField(Recomendacion, blank=True, null=True)
     atencion = models.BooleanField(default=False, verbose_name='Requiere atención')
 
     def __str__(self):
@@ -64,4 +67,7 @@ class PreguntaClasificador(models.Model):
 
     def __str__(self):
         return '{clasificador} / {pregunta}'.format(clasificador=self.clasificador, pregunta=self.pregunta)
+    
+    class Meta:
+        verbose_name_plural = 'Clasificadores de Preguntas'
 
