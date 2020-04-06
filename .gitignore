@@ -10,6 +10,7 @@ __pycache__/
 .vscode
 settings_local
 local_settings
+settings_local.py
 
 # Distribution / packaging
 .Python
