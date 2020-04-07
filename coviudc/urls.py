@@ -27,5 +27,7 @@ urlpatterns = [
     path('', IndexAdmin.as_view(), name='index'),
 ]
 
+admin.site.site_header = "Detección de COVID-19"
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
