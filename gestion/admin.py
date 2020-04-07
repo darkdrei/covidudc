@@ -24,7 +24,3 @@ class DiagnosticoAdmin(admin.ModelAdmin):
     search_fields = ['paciente', 'medico', 'valoracion_inicial', 'fecha']
 admin.site.register(models.Diagnostico, DiagnosticoAdmin)
     
-"""
-list_display = 
-    search_fields = 
-"""
