@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -9,3 +10,4 @@ class IndexAdmin(TemplateView):
         return redirect('/admin/')
     # end def
 # end class
+"""
