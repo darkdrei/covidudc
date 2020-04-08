@@ -1,8 +1,14 @@
 from django.contrib import admin
 from preguntas import models
 from .models import Sintoma, Pregunta, Observacion, Recomendacion, Clasificador, PreguntaClasificador
+from gestion import admin as a_gestion
+from gestion.models import RespuestaUsuario, Valoracion
 
 # Register your models here.
+
+class RespuestaUsuarioInlineAdmin(admin.TabularInline):
+    model = RespuestaUsuario
+    extra = 0
 
 
 class SintomaAdmin(admin.ModelAdmin):
@@ -16,7 +22,7 @@ class SintomaInlineAdmin(admin.TabularInline):
     extra = 3
     
 
-class PreguntaPreguntaClasificadorInlineAdmin(admin.TabularInline):
+class PreguntaClasificadorInlineAdmin(admin.TabularInline):
     model = PreguntaClasificador
     extra = 1
 
@@ -27,7 +33,7 @@ class PreguntaAdmin(admin.ModelAdmin):
     fields = ['nombre', 'descripcion', 'posicion']
     list_filter = ['sintomas', 'posicion']
     list_editable = ['posicion']
-    inlines = [SintomaInlineAdmin, PreguntaPreguntaClasificadorInlineAdmin]
+    inlines = [RespuestaUsuarioInlineAdmin, SintomaInlineAdmin, PreguntaClasificadorInlineAdmin]
 
     def get_sintomas(self, obj):
         return ", ".join([sintoma.nombre for sintoma in obj.sintomas.all()])
@@ -58,12 +64,12 @@ admin.site.register(models.Observacion, ObservacionAdmin)
 class RecomendacionClasificadorInlineAdmin(admin.TabularInline):
     model = Clasificador.recomendaciones.through
     extra = 3
-    
 
-class ClasificadorPreguntaClasificadorInlineAdmin(admin.TabularInline):
-    model = PreguntaClasificador
+
+class ValoracionInlineAdmin(admin.TabularInline):
+    model = Valoracion
     extra = 1
-    
+
 
 class ClasificadorAdmin(admin.ModelAdmin):
     list_display = ['nombre', 'descripcion', 'recomendaciones', 'atencion']
@@ -71,7 +77,7 @@ class ClasificadorAdmin(admin.ModelAdmin):
     fields = ['nombre', 'descripcion', 'atencion']
     list_filter = ['atencion', 'recomendaciones']
     list_editable = ['atencion', 'recomendaciones']
-    inlines = [RecomendacionClasificadorInlineAdmin, ClasificadorPreguntaClasificadorInlineAdmin]
+    inlines = [RecomendacionClasificadorInlineAdmin, PreguntaClasificadorInlineAdmin, ValoracionInlineAdmin]
     def recomendaciones(self, obj):
         return ", ".join([recomendacion.nombre for recomendacion in obj.recomendaciones.all()])
     recomendaciones.short_description = "Recomendaciones"
