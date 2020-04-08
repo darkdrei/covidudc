@@ -1,5 +1,6 @@
 from django.contrib import admin
 from preguntas import models
+from .models import Sintoma, Pregunta, Observacion, Recomendacion, Clasificador, PreguntaClasificador
 
 # Register your models here.
 
@@ -10,9 +11,23 @@ class SintomaAdmin(admin.ModelAdmin):
 admin.site.register(models.Sintoma, SintomaAdmin)
 
 
+class SintomaInlineAdmin(admin.TabularInline):
+    model = Pregunta.sintomas.through
+    extra = 3
+    
+
+class PreguntaPreguntaClasificadorInlineAdmin(admin.TabularInline):
+    model = PreguntaClasificador
+    extra = 1
+
+
 class PreguntaAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'descripcion', 'get_sintomas','posicion']
-    search_fields = ['nombre', 'sintomas']
+    list_display = ['nombre', 'descripcion', 'get_sintomas', 'posicion']
+    search_fields = ['nombre', 'descripcion']
+    fields = ['nombre', 'descripcion', 'posicion']
+    list_filter = ['sintomas', 'posicion']
+    list_editable = ['posicion']
+    inlines = [SintomaInlineAdmin, PreguntaPreguntaClasificadorInlineAdmin]
 
     def get_sintomas(self, obj):
         return ", ".join([sintoma.nombre for sintoma in obj.sintomas.all()])
@@ -20,29 +35,51 @@ class PreguntaAdmin(admin.ModelAdmin):
 admin.site.register(models.Pregunta, PreguntaAdmin)
 
 
+class RecomendacionObservacionInlineAdmin(admin.TabularInline):
+    model = Observacion
+    extra = 1
+    
+
 class RecomendacionAdmin(admin.ModelAdmin):
     list_display = ['nombre', 'descripcion']
     search_fields = ['nombre', 'descripcion']
+    inlines = [RecomendacionObservacionInlineAdmin]
 admin.site.register(models.Recomendacion, RecomendacionAdmin)
 
 
 class ObservacionAdmin(admin.ModelAdmin):
     list_display = ['nombre', 'recomendacion', 'descripcion']
-    search_fields = ['nombre', 'recomendacion', 'descripcion']
+    search_fields = ['nombre', 'descripcion']
+    list_filter = ['recomendacion']
+    list_editable = ['recomendacion']    
 admin.site.register(models.Observacion, ObservacionAdmin)
 
 
-class ClasificadorAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'descripcion', 'get_recomendaciones', 'atencion']
-    search_fields = ['nombre', 'descripcion', 'recomendaciones', 'atencion']
+class RecomendacionClasificadorInlineAdmin(admin.TabularInline):
+    model = Clasificador.recomendaciones.through
+    extra = 3
     
-    def get_recomendaciones(self, obj):
+
+class ClasificadorPreguntaClasificadorInlineAdmin(admin.TabularInline):
+    model = PreguntaClasificador
+    extra = 1
+    
+
+class ClasificadorAdmin(admin.ModelAdmin):
+    list_display = ['nombre', 'descripcion', 'recomendaciones', 'atencion']
+    search_fields = ['nombre', 'descripcion']
+    fields = ['nombre', 'descripcion', 'atencion']
+    list_filter = ['atencion', 'recomendaciones']
+    list_editable = ['atencion', 'recomendaciones']
+    inlines = [RecomendacionClasificadorInlineAdmin, ClasificadorPreguntaClasificadorInlineAdmin]
+    def recomendaciones(self, obj):
         return ", ".join([recomendacion.nombre for recomendacion in obj.recomendaciones.all()])
-    get_recomendaciones.short_description = "Recomendaciones"
+    recomendaciones.short_description = "Recomendaciones"
 admin.site.register(models.Clasificador, ClasificadorAdmin)
 
 
 class PreguntaClasificadorAdmin(admin.ModelAdmin):
     list_display = ['clasificador', 'pregunta', 'respuesta']
-    search_fields = ['clasificador', 'pregunta', 'respuesta']
+    list_filter = ['pregunta', 'respuesta']
+    list_editable = ['respuesta', 'pregunta']
 admin.site.register(models.PreguntaClasificador, PreguntaClasificadorAdmin)
