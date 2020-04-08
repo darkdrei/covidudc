@@ -7,14 +7,14 @@ from preguntas import models as m_pregunta
 
 class RespuestaUsuario(models.Model):
     pregunta = models.ForeignKey(m_pregunta.Pregunta, on_delete=models.CASCADE)
-    respuesta = models.BooleanField(default=False)
+    respuesta = models.BooleanField(default=False, null=False)
 
     def __str__(self):
         return '{pregunta} / {respuesta}'.format(pregunta=self.pregunta.nombre, respuesta=self.respuesta)
 
     class Meta:
-        verbose_name = 'Respuesta usuario'
-        verbose_name_plural = 'Respuestas usuarios'
+        verbose_name = 'Respuesta de usuario'
+        verbose_name_plural = 'Respuestas de usuarios'
 
 
 class Valoracion(models.Model):
@@ -40,5 +40,5 @@ class Diagnostico(models.Model):
         return '{paciente}'.format(paciente=self.paciente.first_name + ' '+self.paciente.last_name)
 
     class Meta:
-        verbose_name = 'Diagnostico'
-        verbose_name_plural = 'Diagnosticos'
+        verbose_name = 'Diagnóstico'
+        verbose_name_plural = 'Diagnósticos'
