@@ -4,25 +4,33 @@ from django.db import models
 
 
 class Sintoma(models.Model):
-    nombre = models.CharField(max_length=20)
+    nombre = models.CharField(unique=True, max_length=20)
     descripcion = models.TextField(max_length=500)
 
     def __str__(self):
         return '{nombre}'.format(nombre=self.nombre)
+    
+    class Meta: 
+        verbose_name = 'Síntoma'
+        verbose_name_plural = 'Síntomas'
 
 
 class Pregunta(models.Model):
     nombre = models.TextField(max_length=800)
     descripcion = models.TextField(max_length=2000, verbose_name='Descripción', blank=True, null=True)
-    sintomas = models.ManyToManyField(Sintoma, blank=True, null=True)
+    sintomas = models.ManyToManyField(Sintoma, blank=True)
     posicion = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return '{nombre}'.format(nombre=self.nombre)
 
+    class Meta:
+        verbose_name = 'Pregunta'
+        verbose_name_plural = 'Preguntas'
+
 
 class Recomendacion(models.Model):
-    nombre = models.CharField(max_length=500)
+    nombre = models.CharField(unique=True, max_length=500)
     descripcion = models.TextField(max_length=2000, verbose_name='Descripción', blank=True, null=True)
 
     def __str__(self):
@@ -47,16 +55,16 @@ class Observacion(models.Model):
 
 
 class Clasificador(models.Model):
-    nombre = models.CharField(max_length=500)
+    nombre = models.CharField(unique=True, max_length=500)
     descripcion = models.TextField(max_length=2000, verbose_name='Descripción', blank=True, null=True)
-    recomendaciones = models.ManyToManyField(Recomendacion, blank=True, null=True)
+    recomendaciones = models.ManyToManyField(Recomendacion, blank=True)
     atencion = models.BooleanField(default=False, verbose_name='Requiere atención')
 
     def __str__(self):
         return '{nombre}'.format(nombre=self.nombre)
 
     class Meta:
-        verbose_name = 'Claseficador'
+        verbose_name = 'Clasificador'
         verbose_name_plural = 'Clasificadores'
 
 
@@ -69,5 +77,7 @@ class PreguntaClasificador(models.Model):
         return '{clasificador} / {pregunta}'.format(clasificador=self.clasificador, pregunta=self.pregunta)
     
     class Meta:
+        verbose_name = 'Clasificador de Pregunta'
         verbose_name_plural = 'Clasificadores de Preguntas'
+        unique_together = (('clasificador', 'pregunta', 'respuesta'))
 
