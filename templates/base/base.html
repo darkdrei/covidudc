@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {% block title %}
+  <title>Evaluacion de riezgo COVID-19 Telemedicina-UDC</title>
+  {% endblock title %}    
+
+  <meta name="description" content="Plataforma de evalucaion de riezgo de covid-19" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;amp;lang=en"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" rel="stylesheet">
+  <link href="{% static 'base/styles/main.css' %}" rel="stylesheet">
+</head>
+
+<body id="top">
+
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="mdl-layout__header mdl-layout__header--waterfall site-header">
+      <div class="mdl-layout__header-row site-logo-row">
+        <span class="mdl-layout__title">
+          <div class="site-logo"></div>
+          <span class="site-description">
+            EVALUACION DE RIEZGO COVID-19
+          </span>
+        </span>
+      </div>
+    </header>
+
+    <main class="mdl-layout__content">
+      
+      {% block container %}
+      <div class="site-content">
+        <div class="container">
+          <div class="mdl-grid site-max-width">
+            <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp welcome-card portfolio-card">
+              <div class="mdl-card__actions mdl-card--border">
+                <!--Inicio Preguntas-->          
+                {% block preguntas %}
+                                
+                {% endblock preguntas %}                 
+                <!--Fin Preguntas-->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endblock container %}        
+      
+      <footer class="mdl-mini-footer">
+        <div class="footer-container">
+          <div class="mdl-logo">&copy;
+            <!--Unitiled.--> Desarrollado: <a href="https://google.com/" target="_blank">Universidad de Cartagena</a>
+          </div>
+          <ul class="mdl-mini-footer__link-list">
+            <li><a href="https://google.com/">Terminos & Condiciones</a></li>
+          </ul>
+        </div>
+      </footer>
+    </main>
+    <!--script src="https://code.getmdl.io/1.3.0/material.min.js" defer></script-->
+  </div>
+
+</body>
+</html>
