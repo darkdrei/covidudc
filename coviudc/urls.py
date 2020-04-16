@@ -21,7 +21,7 @@ from django.urls import path, include
 #from coviudc.views import IndexAdmin
 
 urlpatterns = [
-    path('', include(('gestion.urls', 'index'), namespace='index')),
+    path('', include(('gestion.urls', 'gestion'), namespace='gestion')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     #path('', IndexAdmin.as_view(), name='index'),
