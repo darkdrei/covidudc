@@ -14,7 +14,7 @@ class RespuestaUsuarioInlineAdmin(admin.TabularInline):
 class SintomaAdmin(admin.ModelAdmin):
     list_display = ['nombre', 'descripcion']
     search_fields = ['nombre', 'descripcion']
-admin.site.register(models.Sintoma, SintomaAdmin)
+#admin.site.register(models.Sintoma, SintomaAdmin)
 
 
 class SintomaInlineAdmin(admin.TabularInline):
@@ -28,12 +28,12 @@ class PreguntaClasificadorInlineAdmin(admin.TabularInline):
 
 
 class PreguntaAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'descripcion', 'get_sintomas', 'posicion']
+    list_display = ['nombre', 'descripcion', 'posicion']
     search_fields = ['nombre', 'descripcion']
     fields = ['nombre', 'descripcion', 'posicion']
     list_filter = ['sintomas', 'posicion']
     list_editable = ['posicion']
-    inlines = [RespuestaUsuarioInlineAdmin, SintomaInlineAdmin, PreguntaClasificadorInlineAdmin]
+    inlines = [RespuestaUsuarioInlineAdmin, PreguntaClasificadorInlineAdmin]
 
     def get_sintomas(self, obj):
         return ", ".join([sintoma.nombre for sintoma in obj.sintomas.all()])
