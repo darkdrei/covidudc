@@ -1,6 +1,7 @@
 from django.urls import path
-from gestion.views import Index
+
+from .views import EncuestaNew
 
 urlpatterns = [
-    path('', Index.as_view(), name='index'),
+    path('', EncuestaNew.as_view(), name='encuesta'),
 ]
