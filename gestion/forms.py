@@ -32,8 +32,6 @@ class PlantillaEncuestaForm(forms.ModelForm):
 class EncuestaForm(forms.ModelForm):
     
     class Meta:
-        queryset = PlantillaEncuesta.objects.first().preguntas.all()
-        preguntas = forms.ModelChoiceField(queryset)
         model = Encuesta    
         fields = ['plantillaEncuesta']
     
